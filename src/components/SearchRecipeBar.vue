@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-flex border border-black | w-4/5">
+  <div class="flex | mx-auto | border border-black | w-4/5">
     <input
       v-model="search"
       class="rounded px-5 py-2 | flex-grow"
@@ -21,7 +21,8 @@ export default {
   },
   methods: {
     searchInputHandler() {
-      this.$emit('updatingQueryParam', {query: this.search})
+      this.$store.dispatch('updateRecipeSearchValue', this.search)
+      this.$emit('searchInputHandler')
     },
   },
 }
