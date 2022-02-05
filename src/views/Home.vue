@@ -1,11 +1,11 @@
 <template>
-  <div class="px-5 my-44 | container mx-auto">
+  <div class="px-5 my-32 | container mx-auto">
     <h1 class="text-7xl font-bold text-center | mb-10">Recipe Finder</h1>
     <Search-recipe-bar @searchInputHandler="searchRecipe" />
     <h2 v-if="recipeSearchValue" class="mt-20 text-3xl text-center">
       Search result: {{ recipeSearchValue }}
     </h2>
-    <div class="mt-10 | md:flex gap-5">
+    <div class="mt-10 | md:flex flex-row-reverse gap-5">
       <div class="mb-20 | flex-grow">
         <Recipe-list :recipeList="recipeList" />
         <Pagination :totalPage="totalPage" @pageNumberHandler="searchRecipe" />
