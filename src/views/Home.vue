@@ -62,9 +62,11 @@ export default {
   },
   methods: {
     async searchRecipe() {
-      //   bug in axios is ignoring axios default params
-      //   re-adding default param manually
-
+      if (Object.keys(this.searchRecipeParams).length === 0) {
+        return this.getRandomRecipes()
+      }
+      // bug in axios is ignoring axios default params
+      // re-adding default param manually
       try {
         const {data} = await this.$axios.get(this.searchRecipePath, {
           params: {
