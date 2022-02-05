@@ -14,6 +14,8 @@ export default {
     return {
       maximumNumberPerPage: 5,
       path: '/complexSearch',
+      recipeList: [],
+      totalResults: 0,
     }
   },
   computed: {
@@ -41,18 +43,20 @@ export default {
     async searchData() {
       // bug in axios is ignoring axios default params
       // re-adding default param manually
-      const recipeList = await this.$axios.get(this.path, {
+      const {data} = await this.$axios.get(this.path, {
         params: {
           number: this.maximumNumberPerPage,
           ...this.$axios.defaults.params,
           ...this.searchRecipeParams,
         },
       })
-      console.log(recipeList)
+      this.recipeList = data.results
+      this.totalResults = data.totalResults
     },
   },
   watch: {
     $route() {
+      console.log('changed')
       this.searchData()
     },
   },
