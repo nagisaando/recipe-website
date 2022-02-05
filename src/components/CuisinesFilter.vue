@@ -2,7 +2,7 @@
   <div class="">
     <h3 class="text-3xl">Cuisines</h3>
     <ul class="mt-5">
-      <li v-for="(item, i) in cuisinesOptions" :key="i" class="flex items-center gap-2">
+      <li v-for="(item, i) in cuisinesOptions" :key="i" class="">
         <input
           type="checkbox"
           :id="item"
@@ -10,7 +10,7 @@
           v-model="selectedCuisines"
           @change="filterChangeHandler"
         />
-        <label :for="item" class="text-lg">{{ item }}</label>
+        <label :for="item" class="text-lg ml-2">{{ item }}</label>
       </li>
     </ul>
   </div>
