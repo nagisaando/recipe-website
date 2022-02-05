@@ -6,7 +6,10 @@
       Search result: {{ recipeSearchValue }}
     </h2>
     <div class="mt-10 | md:flex gap-5">
-      <Recipe-list :recipeList="recipeList" />
+      <div class="mb-20 | flex-grow">
+        <Recipe-list :recipeList="recipeList" />
+        <Pagination :totalPage="totalPage" @pageNumberHandler="searchRecipe" />
+      </div>
       <Cuisines-filter @cuisineFilteHandler="searchRecipe" />
     </div>
   </div>
@@ -14,10 +17,11 @@
 
 <script>
 import CuisinesFilter from '../components/CuisinesFilter.vue'
+import Pagination from '../components/Pagination.vue'
 import RecipeList from '../components/RecipeList.vue'
 import SearchRecipeBar from '../components/SearchRecipeBar.vue'
 export default {
-  components: {SearchRecipeBar, CuisinesFilter, RecipeList},
+  components: {SearchRecipeBar, CuisinesFilter, RecipeList, Pagination},
   name: 'Home',
   data() {
     return {
@@ -35,20 +39,32 @@ export default {
     stringifiedSelectedCuisines() {
       return this.$store.getters.stringifiedSelectedCuisines
     },
+    offSet() {
+      return this.maximumNumberPerPage * (this.$store.state.activePage - 1)
+    },
     searchRecipeParams() {
       // adding params if there is search input value
       const params = {}
       if (this.recipeSearchValue) {
-        params.query = this.recipeSearchValue
+        params.titleMatch = this.recipeSearchValue
       }
       if (this.stringifiedSelectedCuisines) {
         params.cuisine = this.stringifiedSelectedCuisines
       }
+      if (this.offSet > 0) {
+        params.offset = this.offSet
+      }
       return params
+    },
+    totalPage() {
+      return Math.ceil(this.totalResults / 5)
     },
   },
   methods: {
     async searchRecipe() {
+      if (Object.keys(this.searchRecipeParams).length === 0) {
+        return this.getRandomRecipes()
+      }
       // bug in axios is ignoring axios default params
       // re-adding default param manually
       try {
@@ -80,8 +96,7 @@ export default {
     },
   },
   created() {
-    console.log('created')
-    this.getRandomRecipes()
+    // this.getRandomRecipes()
   },
 }
 </script>
