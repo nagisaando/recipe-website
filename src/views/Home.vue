@@ -5,13 +5,15 @@
     <h2 v-if="recipeSearchValue" class="mt-20 text-3xl text-center">
       Search result: {{ recipeSearchValue }}
     </h2>
+    <Cuisines-filter @cuisineFilteHandler="searchRecipe" />
   </div>
 </template>
 
 <script>
+import CuisinesFilter from '../components/CuisinesFilter.vue'
 import SearchRecipeBar from '../components/SearchRecipeBar.vue'
 export default {
-  components: {SearchRecipeBar},
+  components: {SearchRecipeBar, CuisinesFilter},
   name: 'Home',
   data() {
     return {
@@ -25,11 +27,17 @@ export default {
     recipeSearchValue() {
       return this.$store.state.recipeSearchValue
     },
+    stringifiedSelectedCuisines() {
+      return this.$store.getters.stringifiedSelectedCuisines
+    },
     searchRecipeParams() {
       // adding params if there is search input value
       const params = {}
       if (this.recipeSearchValue) {
         params.query = this.recipeSearchValue
+      }
+      if (this.stringifiedSelectedCuisines) {
+        params.cuisine = this.stringifiedSelectedCuisines
       }
       return params
     },
