@@ -1,7 +1,13 @@
 module.exports = {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        orange: {
+          DEFAULT: '#F4B233',
+        },
+      },
+    },
   },
   plugins: [],
 }
