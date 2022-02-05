@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     searchRecipeParams() {
-      // adding params if there is searchInput
+      // adding params if there is search input value
       const params = {}
       if (this.$route.query.query) {
         params.query = this.$route.query.query
