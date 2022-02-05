@@ -22,6 +22,7 @@ export default {
   methods: {
     searchInputHandler() {
       this.$store.dispatch('updateRecipeSearchValue', this.search)
+      this.$store.dispatch('updateActivePage', 1)
       this.$emit('searchInputHandler')
     },
   },

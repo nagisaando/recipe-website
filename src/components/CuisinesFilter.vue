@@ -54,6 +54,7 @@ export default {
   methods: {
     filterChangeHandler() {
       this.$store.dispatch('updateSelectedCuisines', this.selectedCuisines)
+      this.$store.dispatch('updateActivePage', 1)
       this.$emit('cuisineFilteHandler')
     },
   },

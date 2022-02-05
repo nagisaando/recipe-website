@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-20 | flex-grow">
+  <div>
     <div class="grid gap-y-10 md:gap-5 md:grid-cols-2 lg:grid-cols-3">
       <Recipe-card v-for="recipe in recipeList" :key="recipe.id" :recipeInfo="recipe" />
     </div>
