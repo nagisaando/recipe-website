@@ -1,24 +1,29 @@
 <template>
-  <div class="px-5 md:px-10 my-44 | container mx-auto">
+  <div class="px-5 my-44 | container mx-auto">
     <h1 class="text-7xl font-bold text-center | mb-10">Recipe Finder</h1>
     <Search-recipe-bar @searchInputHandler="searchRecipe" />
     <h2 v-if="recipeSearchValue" class="mt-20 text-3xl text-center">
       Search result: {{ recipeSearchValue }}
     </h2>
-    <Cuisines-filter @cuisineFilteHandler="searchRecipe" />
+    <div class="mt-10 | md:flex gap-5">
+      <Recipe-list :recipeList="recipeList" />
+      <Cuisines-filter @cuisineFilteHandler="searchRecipe" />
+    </div>
   </div>
 </template>
 
 <script>
 import CuisinesFilter from '../components/CuisinesFilter.vue'
+import RecipeList from '../components/RecipeList.vue'
 import SearchRecipeBar from '../components/SearchRecipeBar.vue'
 export default {
-  components: {SearchRecipeBar, CuisinesFilter},
+  components: {SearchRecipeBar, CuisinesFilter, RecipeList},
   name: 'Home',
   data() {
     return {
       maximumNumberPerPage: 5,
-      path: '/complexSearch',
+      searchRecipePath: '/complexSearch',
+      randomRecipePath: '/random',
       recipeList: [],
       totalResults: 0,
     }
@@ -47,7 +52,7 @@ export default {
       // bug in axios is ignoring axios default params
       // re-adding default param manually
       try {
-        const {data} = await this.$axios.get(this.path, {
+        const {data} = await this.$axios.get(this.searchRecipePath, {
           params: {
             number: this.maximumNumberPerPage,
             ...this.$axios.defaults.params,
@@ -60,6 +65,23 @@ export default {
         console.log(err)
       }
     },
+    async getRandomRecipes() {
+      try {
+        const {data} = await this.$axios.get(this.randomRecipePath, {
+          params: {
+            number: this.maximumNumberPerPage,
+            ...this.$axios.defaults.params,
+          },
+        })
+        this.recipeList = data.recipes
+      } catch (err) {
+        console.log(err)
+      }
+    },
+  },
+  created() {
+    console.log('created')
+    this.getRandomRecipes()
   },
 }
 </script>
