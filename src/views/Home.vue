@@ -1,7 +1,7 @@
 <template>
   <div class="px-5 md:px-10 my-44 | container mx-auto">
     <h1 class="text-7xl font-bold mb-10">Recipe Finder</h1>
-    <Search-product-bar @searchInputHandler="updateURLQueryParam($event)" />
+    <Search-product-bar @updatingQueryParam="updateURLQueryParam($event)" />
   </div>
 </template>
 

@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     searchInputHandler() {
-      this.$emit('searchInputHandler', {query: this.search})
+      this.$emit('updatingQueryParam', {query: this.search})
     },
   },
 }
