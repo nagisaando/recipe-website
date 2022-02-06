@@ -82,9 +82,6 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {}
-  },
   computed: {
     lastPage() {
       const arr = []
@@ -99,7 +96,6 @@ export default {
       return this.$store.state.activePage
     },
   },
-  watch: {},
   methods: {
     changePage(page) {
       let pageNumber = 0

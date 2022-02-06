@@ -50,7 +50,7 @@ export default {
       return this.maximumNumberPerPage * (this.$store.state.activePage - 1)
     },
     searchRecipeParams() {
-      // adding params if there is search input value
+      // adding params if there is search input value or cuisine is selected or padination number is more than 1
       const params = {}
       if (this.recipeSearchValue) {
         params.titleMatch = this.recipeSearchValue
@@ -64,7 +64,7 @@ export default {
       return params
     },
     totalPage() {
-      return Math.ceil(this.totalResults / 5)
+      return Math.ceil(this.totalResults / this.maximumNumberPerPage)
     },
   },
   methods: {
@@ -88,9 +88,17 @@ export default {
         this.loadingRecipe = false
       }
     },
+    resetOptionsForRecipeList() {
+      this.$store.dispatch('updateRecipeSearchValue', '')
+      this.$store.dispatch('updateSelectedCuisines', [])
+      this.$store.dispatch('updateActivePage', 1)
+    },
   },
   created() {
     this.searchRecipe()
+  },
+  beforeDestroy() {
+    this.resetOptionsForRecipeList()
   },
 }
 </script>
