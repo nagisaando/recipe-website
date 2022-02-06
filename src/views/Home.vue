@@ -5,7 +5,7 @@
     <h2 v-if="recipeSearchValue" class="mt-20 text-3xl text-center">
       Search result: {{ recipeSearchValue }}
     </h2>
-    <div class="mt-10 | md:flex flex-row-reverse gap-5">
+    <div class="mt-10 | md:flex flex-row-reverse gap-10">
       <div class="mb-20 | flex-grow">
         <Recipe-list :recipeList="recipeList" />
         <Pagination :totalPage="totalPage" @pageNumberHandler="searchRecipe" />
