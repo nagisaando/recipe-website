@@ -1,11 +1,11 @@
 <template>
-  <div class="px-5 my-44 | container mx-auto">
+  <div class="px-5 my-32 | container mx-auto">
     <h1 class="text-7xl font-bold text-center | mb-10">Recipe Finder</h1>
     <Search-recipe-bar @searchInputHandler="searchRecipe" />
     <h2 v-if="recipeSearchValue" class="mt-20 text-3xl text-center">
       Search result: {{ recipeSearchValue }}
     </h2>
-    <div class="mt-10 | md:flex gap-5">
+    <div class="mt-10 | md:flex flex-row-reverse gap-10">
       <div class="mb-20 | flex-grow">
         <Recipe-list :recipeList="recipeList" />
         <Pagination :totalPage="totalPage" @pageNumberHandler="searchRecipe" />
@@ -62,9 +62,6 @@ export default {
   },
   methods: {
     async searchRecipe() {
-      if (Object.keys(this.searchRecipeParams).length === 0) {
-        return this.getRandomRecipes()
-      }
       // bug in axios is ignoring axios default params
       // re-adding default param manually
       try {
@@ -81,22 +78,9 @@ export default {
         console.log(err)
       }
     },
-    async getRandomRecipes() {
-      try {
-        const {data} = await this.$axios.get(this.randomRecipePath, {
-          params: {
-            number: this.maximumNumberPerPage,
-            ...this.$axios.defaults.params,
-          },
-        })
-        this.recipeList = data.recipes
-      } catch (err) {
-        console.log(err)
-      }
-    },
   },
   created() {
-    // this.getRandomRecipes()
+    this.searchRecipe()
   },
 }
 </script>
