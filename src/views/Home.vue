@@ -62,9 +62,6 @@ export default {
   },
   methods: {
     async searchRecipe() {
-      if (Object.keys(this.searchRecipeParams).length === 0) {
-        return this.getRandomRecipes()
-      }
       // bug in axios is ignoring axios default params
       // re-adding default param manually
       try {
@@ -81,22 +78,9 @@ export default {
         console.log(err)
       }
     },
-    async getRandomRecipes() {
-      try {
-        const {data} = await this.$axios.get(this.randomRecipePath, {
-          params: {
-            number: this.maximumNumberPerPage,
-            ...this.$axios.defaults.params,
-          },
-        })
-        this.recipeList = data.recipes
-      } catch (err) {
-        console.log(err)
-      }
-    },
   },
   created() {
-    // this.getRandomRecipes()
+    this.searchRecipe()
   },
 }
 </script>

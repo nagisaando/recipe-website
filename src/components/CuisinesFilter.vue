@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="flex-shrink-0">
     <h3 class="text-3xl">Cuisines</h3>
     <ul class="mt-5">
       <li v-for="(item, i) in cuisinesOptions" :key="i" class="">
