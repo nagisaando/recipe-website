@@ -12,7 +12,6 @@ export const routes = [
     component: () => import('./views/RecipeDetail.vue'),
   },
   {
-    // path: "*",
     path: '*',
     name: 'NotFound',
     component: NotFound,
