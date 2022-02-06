@@ -66,7 +66,7 @@ export default {
         this.recipeData = data
         this.loading = false
       } catch (err) {
-        console.log(err)
+        alert(err)
         this.loading = false
         this.$router.replace({name: 'NotFound'})
       }

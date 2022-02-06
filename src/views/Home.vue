@@ -84,7 +84,7 @@ export default {
         this.totalResults = data.totalResults
         this.loadingRecipe = false
       } catch (err) {
-        console.log(err)
+        alert(err)
         this.loadingRecipe = false
       }
     },
