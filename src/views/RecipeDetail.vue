@@ -1,6 +1,9 @@
 <template>
   <div class="px-5 my-40 | container mx-auto">
-    <div v-if="Object.keys(recipeData).length > 0">
+    <div v-if="loading" class="text-center">
+      <loader />
+    </div>
+    <div v-else>
       <h1 class="text-5xl font-bold | mb-10">{{ recipeData.title }}</h1>
 
       <img :src="recipeData.image" :alt="recipeData.title" />
@@ -41,11 +44,14 @@
 </template>
 
 <script>
+import Loader from '../components/Loader.vue'
 export default {
+  components: {Loader},
   name: 'RecipeDetail',
   data() {
     return {
       recipeData: {},
+      loading: true,
     }
   },
   computed: {
@@ -58,8 +64,10 @@ export default {
       try {
         const {data} = await this.$axios.get(this.path)
         this.recipeData = data
+        this.loading = false
       } catch (err) {
         console.log(err)
+        this.loading = false
         this.$router.replace({name: 'NotFound'})
       }
     },

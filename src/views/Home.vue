@@ -7,8 +7,13 @@
     </h2>
     <div class="mt-10 | md:flex flex-row-reverse gap-10">
       <div class="mb-20 | flex-grow">
-        <Recipe-list :recipeList="recipeList" />
-        <Pagination :totalPage="totalPage" @pageNumberHandler="searchRecipe" />
+        <div v-if="loadingRecipe" class="text-center">
+          <Loader />
+        </div>
+        <div v-else>
+          <Recipe-list :recipeList="recipeList" />
+          <Pagination :totalPage="totalPage" @pageNumberHandler="searchRecipe" />
+        </div>
       </div>
       <Cuisines-filter @cuisineFilteHandler="searchRecipe" />
     </div>
@@ -17,11 +22,12 @@
 
 <script>
 import CuisinesFilter from '../components/CuisinesFilter.vue'
+import Loader from '../components/Loader.vue'
 import Pagination from '../components/Pagination.vue'
 import RecipeList from '../components/RecipeList.vue'
 import SearchRecipeBar from '../components/SearchRecipeBar.vue'
 export default {
-  components: {SearchRecipeBar, CuisinesFilter, RecipeList, Pagination},
+  components: {SearchRecipeBar, CuisinesFilter, RecipeList, Pagination, Loader},
   name: 'Home',
   data() {
     return {
@@ -30,6 +36,7 @@ export default {
       randomRecipePath: '/random',
       recipeList: [],
       totalResults: 0,
+      loadingRecipe: true,
     }
   },
   computed: {
@@ -62,6 +69,7 @@ export default {
   },
   methods: {
     async searchRecipe() {
+      this.loadingRecipe = true
       // bug in axios is ignoring axios default params
       // re-adding default param manually
       try {
@@ -74,8 +82,10 @@ export default {
         })
         this.recipeList = data.results
         this.totalResults = data.totalResults
+        this.loadingRecipe = false
       } catch (err) {
         console.log(err)
+        this.loadingRecipe = false
       }
     },
   },
